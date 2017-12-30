@@ -5,12 +5,13 @@
 /* eslint global-require: 0 */
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image, Text, Button, View } from 'react-native';
+
+import { ImagePicker } from 'expo';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -18,19 +19,44 @@ const styles = StyleSheet.create({
 
 if (__DEV__) {
   require('./src/helpers/reactotron');
-  const Reactotron = require('reactotron-react-native').default;
-  Reactotron.log('unko');
 }
 
 console.ignoredYellowBox = ['Setting a timer', 'source.uri'];
 
+type State = {
+  image: number
+};
+
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { image: null };
+    this.onPressPickImage = this.onPressPickImage.bind(this);
+  }
+
+  state: State;
+
+  onPressPickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    // Reactotron.log(result);
+    if (!result.cancelled) {
+      this.setState({ image: result.uri });
+    }
+  };
+
   render() {
+    const { image } = this.state;
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Button
+          title="Pick an image from camera roll"
+          onPress={this.onPressPickImage}
+        />
+        {image &&
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
       </View>
     );
   }

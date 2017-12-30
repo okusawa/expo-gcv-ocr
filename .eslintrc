@@ -4,7 +4,8 @@
   "rules": {
     "react/prefer-stateless-function": 0,
     "comma-dangle": 0,
-    "no-constant-condition": 0
+    "no-constant-condition": 0,
+    "react/jsx-filename-extension": 0
   },
   "plugins": [
     "react",
