@@ -1,0 +1,13 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "react/prefer-stateless-function": 0,
+    "comma-dangle": 0,
+    "no-constant-condition": 0
+  },
+  "plugins": [
+    "react",
+    "flow-vars"
+  ],
+}
