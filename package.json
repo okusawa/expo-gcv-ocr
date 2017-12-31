@@ -33,6 +33,7 @@
     "native-base": "^2.3.5",
     "react": "16.0.0",
     "react-native": "0.50.3",
-    "react-native-router-flux": "^4.0.0-beta.25"
+    "react-native-router-flux": "^4.0.0-beta.25",
+    "superagent": "^3.8.2"
   }
 }
