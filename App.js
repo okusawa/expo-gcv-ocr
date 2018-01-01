@@ -76,7 +76,7 @@ export default class App extends React.Component {
 
   onPressPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      // allowsEditing: true,
+      allowsEditing: true,
       // aspect: [4, 3],
       base64: true
     });
