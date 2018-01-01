@@ -10,6 +10,7 @@ import Reactotron from 'reactotron-react-native';
 import { ImagePicker } from 'expo';
 
 import * as VisionApi from './src/apis/vision';
+import ApiKey from './src/config/apiKey';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,15 +52,15 @@ export default class App extends React.Component {
 
   onPressOcr() {
     const { base64 } = this.state;
-    const apiKey = 'AIzaSyD43nM28Xwmm19-WtQQ5WPTSxNduMfqtZk';
     this.setState({ enabledPress: false });
-    VisionApi.detectText(apiKey, base64, (result) => {
-      // Reactotron.log(result);
+    VisionApi.detectText(ApiKey.vision, base64, (result) => {
       this.setState({ enabledPress: true });
 
-      const body = result.responses[0].fullTextAnnotation.text;
+      const response = result.responses[0].fullTextAnnotation;
+      Reactotron.log(response);
+      const body = response ? response.text : '文字列が見つかりません。';
       Alert.alert(
-        'result',
+        'OCR結果',
         body,
         [
           {
@@ -91,7 +92,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Button
-          title="Select Image"
+          title="画像を選択してください"
           style={styles.button}
           onPress={this.onPressPickImage}
         />
@@ -99,7 +100,7 @@ export default class App extends React.Component {
           <Image source={{ uri: image }} style={styles.image} resizeMode="contain" />}
         {image &&
           <Button
-            title="Google Cloud Vision OCR"
+            title="Google Cloud Vision OCR 実行"
             onPress={this.onPressOcr}
             disabled={!enabledPress}
           />}
